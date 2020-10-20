@@ -8,5 +8,5 @@ app.listen(port,function(err){
         console.log("Error in ffiring Up server");
         return;
     }
-    console.log(`Server is running fine in port:: ${port}`);
+    console.log(`Server is running fine on port:: ${port}`);
 });
