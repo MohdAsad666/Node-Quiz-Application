@@ -1,8 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 const teacherController = require('../controllers/teacherController');
+const teacher = require('../models/teacherSchema');
 router.get('/signup',teacherController.signup);
 router.get('/login',teacherController.login);
-router.post('/signin',teacherController.signin);
+router.get('/courses',teacherController.courses);
+router.get('/course/:id',teacherController.courseProfile);
+router.post('/signin',passport.authenticate('teacher',{failureRedirect:'/teacher/login'}),teacherController.signin);
 router.post('/create',teacherController.create);
+router.post('/courseCreate',teacherController.addcourses);
 module.exports = router;

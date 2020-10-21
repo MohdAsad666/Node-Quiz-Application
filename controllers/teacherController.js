@@ -1,22 +1,66 @@
 const teachers = require('../models/teacherSchema');
 const students = require('../models/studentSchema');
+const courses = require('../models/courseSchema');
 module.exports.signup = function(req,res)
 {
-    return res.render('teachersignup.ejs');
+    if(req.isAuthenticated())
+    {
+        return res.redirect('/');
+    }
+    else
+    {
+        return res.render('teachersignup.ejs');
+    }
 }
 module.exports.login = function(req,res)
 {
-    return res.render('teacherlogin.ejs');
+    if(req.isAuthenticated())
+    {
+        return res.redirect('/');
+    }
+    else
+    {
+        return res.render('teacherlogin.ejs');
+    }
+    
+}
+module.exports.courses = function(req,res)
+{
+        courses.find({},function(err,course){
+            return res.render('courses.ejs',{course:course});
+        });
+}
+module.exports.courseProfile = function(req,res)
+{
+    courses.findById(req.params.id,function(err,course) 
+    {
+        if(err)
+        {
+            console.log("Well there is error in finding the course");
+            return res.redirect('/teacher/courses');
+        }
+        if(!course)
+        {
+            console.log("Course not found");
+            return res.redirect('/teacher/courses');
+        }
+        if(course)
+        {
+            res.render('courseQuiz.ejs',{course:course});
+        }
+    });
 }
 module.exports.create = function(req,res)
 {
-    let student = students.findOne({email:req.body.email});
-    if(student)
-    {
-        console.log("Following Id is exist as that of student");
-        return res.redirect("/teacher/signup");
-    }
-    teachers.findOne({email:req.body.email},function(err,teacher)
+    students.findOne({email:req.body.email},function(err,student){
+        if(student)
+        {
+            console.log("Following Id is exist as that of student :: ",student);
+            return res.redirect("/teacher/signup");
+        }
+        if(!student)
+        {
+            teachers.findOne({email:req.body.email},function(err,teacher)
     {
         if(teacher)
         {
@@ -39,27 +83,39 @@ module.exports.create = function(req,res)
                 }
                 console.log("Account created");
                 return res.redirect('/');
-            })
+            });
         }
     });
+        }
+    });
+    
 }
 module.exports.signin = function(req,res)
 {
-    teachers.findOne({email:req.body.email},function(err,teacher)
+    return res.redirect('/');
+}
+module.exports.addcourses = function(req,res)
+{
+    courses.findOne({name:req.body.name},function(err,name)
     {
-        if(!teacher)
+        if(name)
         {
-            console.log("User not found :: Try making an account");
-            return res.redirect('/teacher/login');
+            console.log("Course exist Try Making another");
+            return res.redirect('/teacher/courses');
         }
-        else if(teacher.password!= req.body.password)
+        else if(!name)
         {
-            console.log("username/password incorrect");
-            return res.redirect('/teacher/login');
+            courses.create({
+                name:req.body.name},function(err,course)
+            {
+                if(err)
+                {
+                    console.log("Error Occured in adding course :: ",err);
+                    return res.redirect('/teacher/courses');;
+                }
+                console.log(course);
+                return res.redirect('/teacher/courses');
+            });
         }
-        else
-        {
-            return res.redirect("/");
-        }
-    })
+    });
 }

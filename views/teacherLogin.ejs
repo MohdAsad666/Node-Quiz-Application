@@ -1,7 +1,9 @@
 <body>
-    <form action="/teacher/signin" method="POST">
-        <input type="email" name="email" id="" placeholder="Enter Email">
-        <input type="password" name="password" id="" placeholder=" Enter Password">
-        <input type="submit" value="log in">
-    </form>
+        <%if(!locals.user){%>
+            <form action="/teacher/signin" method="POST">
+                <input type="email" name="email" id="" placeholder="Enter Email">
+                <input type="password" name="password" id="" placeholder=" Enter Password">
+                <input type="submit" value="log in">
+            </form>
+        <%}%>
 </body>

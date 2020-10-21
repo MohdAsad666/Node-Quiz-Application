@@ -1,4 +1,12 @@
 
     <ul>
         <li ><a href="/login">Login</a></li>
+        <%if(locals.user){%>
+        <li>
+           <%=locals.user.name%>
+        </li>
+        <li>
+            <a href="/logout">sign out</a>
+        </li>
+        <%}%>
     </ul>

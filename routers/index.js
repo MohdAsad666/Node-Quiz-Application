@@ -5,4 +5,5 @@ router.get('/',homeController.homePage);
 router.get('/login',homeController.login);
 router.use('/teacher',require('./teacher'));
 router.use('/student',require('./student'));
+router.get('/logout',homeController.logout);
 module.exports = router;
