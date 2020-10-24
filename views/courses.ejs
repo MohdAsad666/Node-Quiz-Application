@@ -9,8 +9,12 @@
         <%}%>
         <ul>
         <%for(course of course){%>
+            <%console.log(course._id)%>
             <li>
-                <a href="course/<%=course._id%>"><%=course.name%></a>
+               <%if((locals.user) && (locals.user.id == course.teacher._id)){%>
+                <a href="/course/delete/<%=course.id%>"><small>x</small>
+                    <%}%>
+            </a> <a href="course/<%=course._id%>"><%=course.name%></a>
             </li>
         <%}%>
     </ul>

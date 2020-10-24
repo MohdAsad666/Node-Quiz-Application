@@ -1,4 +1,20 @@
 <body>
     <h1>Course profile</h1>
-    
+    Quiz for <%=course.name%>
+    <form action="/teacher/course/<%=course._id%>/addquiz" method="POST">
+        <input type="text" name="quizname" id="">
+        <input type="submit" value="Add Course">
+    </form>
+    <div>
+        <ul>
+        <%for(q of quiz){%>
+            <li>
+                <%if(locals.user && locals.user.id == q.teacher._id){%>
+                    <a href="/teacher/course/<%=course._id%>/deletequiz/<%=q._id%>"><small>X</small></a>
+                <%}%>
+                <a href="/teacher/course/<%=course._id%>/addquestion"><%=q.quizname%></a>
+            </li>
+            <%}%>
+        </ul>
+    </div>
 </body>

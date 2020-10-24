@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const courseschema = new mongoose.Schema({
-    name:
-    {
+const quizSchema = new mongoose.Schema({
+    quizname:{
         type:String,
         required:true,
         unique:true
@@ -11,5 +10,6 @@ const courseschema = new mongoose.Schema({
         ref:'Teacher'
     }
 },{timestamps:true});
-const Course = mongoose.model('Course',courseschema);
-module.exports = Course;
+
+const QuizName = mongoose.model('QuizName',quizSchema);
+module.exports = QuizName;

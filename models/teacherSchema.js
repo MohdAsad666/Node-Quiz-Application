@@ -15,8 +15,11 @@ const teacherSchema = new mongoose.Schema({
     password:{
         type:String,
         required:true
+    },
+    QuizCreated:{
+        type:Boolean
     }
 },{timestamps:true});
 
-const teacher = mongoose.model('teacher',teacherSchema);
-module.exports = teacher;
+const Teacher = mongoose.model('Teacher',teacherSchema);
+module.exports = Teacher;

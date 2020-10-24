@@ -4,8 +4,7 @@ const students = require("../models/studentSchema");
 const localStrategy = require('passport-local').Strategy;
 passport.use('teacher',new localStrategy(
     {
-        usernameField:'email',
-        // passReqToCallback:true
+        usernameField:'email'
     },
     function(email, password, done) {
         teachers.findOne({ email: email }, function (err, teacher) {
@@ -31,7 +30,6 @@ passport.use('teacher',new localStrategy(
 passport.use('student',new localStrategy(
     {
         usernameField:'email',
-        // passReqToCallback:true
     },
     function(email, password, done) {
         students.findOne({ email: email }, function (err, student) {
